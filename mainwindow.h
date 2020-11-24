@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <levels.h>
 #include <game.h>
 
 namespace Ui
@@ -16,15 +17,23 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
 signals:
     void Update();
 
 private slots:
     void on_pushButtonStart_clicked();
+    void on_pushButtonContinue_clicked();
+    void showUp(GameWindow *saved);
 
 private:
     Ui::MainWindow *ui;
-    AnotherWindow *gameWindow;
+    LevelWindow *levelWindow;
+    GameWindow *savedGame;
+    QString savedLabel;
+    QString savedWord;
+    int savedLives;
+    int savedCurrentSize;
 };
 
 #endif // MAINWINDOW_H

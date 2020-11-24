@@ -9,19 +9,31 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    circle.cpp \
     game.cpp \
+    kind.cpp \
+    levels.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
+    circle.h \
     game.h \
-    mainwindow.h
+    kind.h \
+    levels.h \
+    mainwindow.h \
+    random.h
 
 FORMS += \
     game.ui \
+    kind.ui \
+    levels.ui \
     mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    resours.qrc

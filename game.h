@@ -3,28 +3,39 @@
 
 #include <QWidget>
 #include <QMessageBox>
+#include <QTextStream>
+#include <QShowEvent>
+#include <QWidget>
+#include <QGraphicsScene>
+#include <QFile>
+
+#include <circle.h>
+
 
 namespace Ui {
-    class AnotherWindow;
+    class GameWindow;
 }
 
-class AnotherWindow : public QWidget
+class GameWindow : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit AnotherWindow(QWidget *parent = 0);
-    ~AnotherWindow();
+    explicit GameWindow(QWidget *parent = 0);
+    ~GameWindow();
 
 signals:
-    void firstWindow();
-    void signalFromButton(QString letter);// Сигнал для первого окна на открытие
+    void previousWindow();
+    void signalFromButton(QString letter);
+    void toMainWindow();
+
+public slots:
+    void setFileName(int l, int k);
 
 private slots:
-    // Слот-обработчик нажатия кнопки
-    void on_pushButtonMenu_clicked();
-    void on_pushButtonRestart_clicked();
     void showEvent(QShowEvent *);
+    void on_pushButton_back_clicked();       // Слот-обработчик нажатия кнопки
+    void on_pushButtonRestart_clicked();    // Слот-обработчик нажатия кнопки
     void slotLetter(QString letter);
 
     void on_pushButton_1_clicked();
@@ -61,9 +72,24 @@ private slots:
     void on_pushButton_32_clicked();
 
 private:
-    Ui::AnotherWindow *ui;
-    void enableKeyBoard();
+    Ui::GameWindow *ui;
+    QString word, unknown_word = "";
+    QFile file;
+    QString filename;
+    int lives;
+    int current_size;
+    QString savedLabel;
+    QString savedWord;
+    int savedLives;
+    int savedCurrentSize;
+    QGraphicsScene  *scene;     // Объявляю графическую сцену
+    Circle        *circle;      // и круг
 
+    void enableKeyBoard();
+    void initGrafScene();       // инициализация графической сцены
+    void paint(int Lives);      // отрисовка виселицы
+    void cleanStored();
+    void saveStored();
 };
 
 #endif // GAME_H

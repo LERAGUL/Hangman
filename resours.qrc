@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/myfiles">
+        <file>level1_transport.txt</file>
+        <file>level2_transport.txt</file>
+        <file>level3_transport.txt</file>
+        <file>level1_cooking.txt</file>
+        <file>level1_music.txt</file>
+        <file>level2_cooking.txt</file>
+        <file>level2_music.txt</file>
+        <file>level3_cooking.txt</file>
+        <file>level3_music.txt</file>
+    </qresource>
+</RCC>
