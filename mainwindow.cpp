@@ -11,34 +11,25 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    updateFile();
+
     ui->setupUi(this);
     levelWindow = new LevelWindow(); // Инициализирую второе окно
     connect(levelWindow, &LevelWindow::previousWindow, this, &MainWindow::show);
     connect(levelWindow, &LevelWindow::toMainWindow, this, &MainWindow::showUp);
 
-    set.beginGroup( "WidgetContent" );
-    savedLabel = set.value( "savedLabel", "" ).toString();
-    savedWord = set.value( "savedWord", "" ).toString();
-    savedLives = set.value( "savedLives", 9 ).toInt();
-    savedCurrentSize = set.value( "savedCurrentSize", 0 ).toInt();
-    set.endGroup();
+    setFile();
+
     cout << savedLives << endl;
 
-    if (savedLives != 9 || savedCurrentSize != 0)
-    {
-        ui->pushButtonContinue->setEnabled(1);
-    }
 }
 
 void MainWindow::showUp(GameWindow *saved)
 {
     this->show();
-    set.beginGroup( "WidgetContent" );
-    savedLabel = set.value( "savedLabel", "" ).toString();
-    savedWord = set.value( "savedWord", "" ).toString();
-    savedLives = set.value( "savedLives", 9 ).toInt();
-    savedCurrentSize = set.value( "savedCurrentSize", 0 ).toInt();
-    set.endGroup();
+
+    setFile();
+
     cout << savedLives << endl;
 
     if (savedLives != 9 || savedCurrentSize != 0)
@@ -54,11 +45,19 @@ void MainWindow::showUp(GameWindow *saved)
 
 void MainWindow::on_pushButtonContinue_clicked()
 {
-    savedGame->show();  // Показать окно игры
+    savedGame->show();   // Показать окно игры
     this->close();       // Закрываем основное
 }
 
 void MainWindow::on_pushButtonStart_clicked()
+{
+    updateFile();
+
+    levelWindow->show();  // Показать второе окно
+    this->close();        // Закрываем основное
+}
+
+void MainWindow::updateFile()
 {
     set.beginGroup( "WidgetContent" );
     set.setValue( "savedLabel", "");
@@ -66,11 +65,17 @@ void MainWindow::on_pushButtonStart_clicked()
     set.setValue( "savedLives", 9);
     set.setValue( "savedCurrentSize", 0);
     set.endGroup();
-
-    levelWindow->show();  // Показать второе окно
-    this->close();       // Закрываем основное
 }
 
+void MainWindow::setFile()
+{
+    set.beginGroup( "WidgetContent" );
+    savedLabel = set.value( "savedLabel", "" ).toString();
+    savedWord = set.value( "savedWord", "" ).toString();
+    savedLives = set.value( "savedLives", 9 ).toInt();
+    savedCurrentSize = set.value( "savedCurrentSize", 0 ).toInt();
+    set.endGroup();
+}
 
 MainWindow::~MainWindow()
 {

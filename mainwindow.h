@@ -34,6 +34,8 @@ private:
     QString savedWord;
     int savedLives;
     int savedCurrentSize;
+    void updateFile();
+    void setFile();
 };
 
 #endif // MAINWINDOW_H
